@@ -29,7 +29,8 @@ The wiki/documentation pages are available at http://dwoo.org/documentation/
 Requirements
 ------------
 * PHP >= **5.3**
-* PHP >= **7.0**
+* PHP >= **7.x**
+* PHP >= **8.0**
 * [Multibyte String](http://php.net/manual/en/book.mbstring.php)
 
 License
