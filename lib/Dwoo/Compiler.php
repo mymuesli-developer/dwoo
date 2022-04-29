@@ -2064,7 +2064,7 @@ class Compiler implements ICompiler
                 if ($func === 'tif') {
                     $params[] = $tokens;
                 }
-                $output = call_user_func_array($funcCompiler, $params);
+                $output = call_user_func_array($funcCompiler, array_values($params));
             } else {
                 $params = self::implode_r($params);
                 if ($pluginType & Core::CUSTOM_PLUGIN) {
@@ -2126,7 +2126,7 @@ class Compiler implements ICompiler
                 if ($func === 'tif') {
                     $params[] = $tokens;
                 }
-                $output = call_user_func_array($funcCompiler, $params);
+                $output = call_user_func_array($funcCompiler, array_values($params));
             } else {
                 array_unshift($params, '$this');
                 $params = self::implode_r($params);
@@ -3643,10 +3643,15 @@ class Compiler implements ICompiler
 
         $out = array();
         foreach ($ref->getParameters() as $param) {
-            if (($class = $param->getClass()) !== null && $class->name === 'Dwoo\Core') {
+            
+            $class = $param->getType() && !$param->getType()->isBuiltin()
+                ? new \ReflectionClass($param->getType()->getName())
+                : null;            
+            
+            if (($class) !== null && $class->name === 'Dwoo\Core') {
                 continue;
             }
-            if (($class = $param->getClass()) !== null && $class->name === 'Dwoo\Compiler') {
+            if (($class) !== null && $class->name === 'Dwoo\Compiler') {
                 continue;
             }
             if ($param->getName() === 'rest' && $param->isArray() === true) {
