@@ -3654,7 +3654,8 @@ class Compiler implements ICompiler
             if (($class) !== null && $class->name === 'Dwoo\Compiler') {
                 continue;
             }
-            if ($param->getName() === 'rest' && $param->isArray() === true) {
+             $isArray = $param->getType() && $param->getType()->getName() === 'array'; 
+            if ($param->getName() === 'rest' && $isArray === true) {
                 $out[] = array('*', $param->isOptional(), null);
                 continue;
             }
